@@ -1,9 +1,9 @@
 const content = {
     en: {
         title: "Innovia Integrated Solutions",
-        services: "Our Services",
+        services: "Services",
         about: "About Us",
-        contact: "Contact Us",
+        contact: "Contact",
         servicesDescription: "We specialize in Call Center Software Solutions, CRM Software Solutions, and Integration Solutions with various third parties.",
         aboutDescription: "Innovia Integrated Solutions provides tailored solutions for all business sectors with unlimited customizations.",
         contactEmail: "info@innoviais.com",
@@ -25,12 +25,24 @@ let currentLanguage = 'en';
 
 function changeLanguage(lang) {
     currentLanguage = lang;
-    document.getElementById('title').innerText = content[currentLanguage].title;
-    document.getElementById('services').innerText = content[currentLanguage].services;
-    document.getElementById('about').innerText = content[currentLanguage].about;
-    document.getElementById('contact').innerText = content[currentLanguage].contact;
-    document.getElementById('servicesDescription').innerText = content[currentLanguage].servicesDescription;
-    document.getElementById('aboutDescription').innerText = content[currentLanguage].aboutDescription;
-    document.getElementById('contactEmail').innerText = content[currentLanguage].contactEmail;
-    document.getElementById('footer').innerText = content[currentLanguage].footer;
+    const data = content[currentLanguage];
+    document.getElementById('title').innerText = data.title;
+    document.getElementById('brandName').innerText = data.title;
+    document.getElementById('navServices').innerText = data.services;
+    document.getElementById('navAbout').innerText = data.about;
+    document.getElementById('navContact').innerText = data.contact;
+    document.getElementById('servicesHeading').innerText = data.services;
+    document.getElementById('aboutHeading').innerText = data.about;
+    document.getElementById('contactHeading').innerText = data.contact;
+    document.getElementById('servicesDescription').innerText = data.servicesDescription;
+    document.getElementById('aboutDescription').innerText = data.aboutDescription;
+    const emailElement = document.getElementById('contactEmail');
+    emailElement.innerText = data.contactEmail;
+    emailElement.href = `mailto:${data.contactEmail}`;
+    document.getElementById('footerText').innerText = data.footer;
 }
+
+// Initialize UI language when DOM is ready
+document.addEventListener('DOMContentLoaded', function onDomReady() {
+    changeLanguage(currentLanguage);
+});
