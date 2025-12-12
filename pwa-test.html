@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PWA Status Test - Innovia</title>
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .status-item {
+            transition: all 0.3s;
+        }
+        .status-pass {
+            background: #dcfce7;
+            border-left: 4px solid #16a34a;
+        }
+        .status-fail {
+            background: #fee2e2;
+            border-left: 4px solid #dc2626;
+        }
+        .status-pending {
+            background: #fef3c7;
+            border-left: 4px solid #eab308;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4">
+    <div class="max-w-4xl mx-auto">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold mb-2 text-blue-600">
+                <i class="fas fa-check-circle"></i> PWA Status Test
+            </h1>
+            <p class="text-gray-600">Check if your Progressive Web App is configured correctly</p>
+        </div>
+
+        <!-- Service Worker Status -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4"><i class="fas fa-cog mr-2 text-blue-600"></i>Service Worker</h2>
+            <div id="sw-status" class="status-item p-4 rounded mb-2 status-pending">
+                <div class="flex items-center justify-between">
+                    <span><i class="fas fa-spinner fa-spin mr-2"></i>Checking service worker...</span>
+                    <span id="sw-badge" class="px-3 py-1 rounded text-sm">Pending</span>
+                </div>
+            </div>
+            <div id="sw-details" class="text-sm text-gray-600 mt-2 ml-4"></div>
+        </div>
+
+        <!-- Manifest Status -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4"><i class="fas fa-file-code mr-2 text-blue-600"></i>Web App Manifest</h2>
+            <div id="manifest-status" class="status-item p-4 rounded mb-2 status-pending">
+                <div class="flex items-center justify-between">
+                    <span><i class="fas fa-spinner fa-spin mr-2"></i>Checking manifest...</span>
+                    <span id="manifest-badge" class="px-3 py-1 rounded text-sm">Pending</span>
+                </div>
+            </div>
+            <div id="manifest-details" class="text-sm text-gray-600 mt-2 ml-4"></div>
+        </div>
+
+        <!-- HTTPS Status -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4"><i class="fas fa-lock mr-2 text-blue-600"></i>HTTPS</h2>
+            <div id="https-status" class="status-item p-4 rounded mb-2 status-pending">
+                <div class="flex items-center justify-between">
+                    <span><i class="fas fa-spinner fa-spin mr-2"></i>Checking HTTPS...</span>
+                    <span id="https-badge" class="px-3 py-1 rounded text-sm">Pending</span>
+                </div>
+            </div>
+            <div id="https-details" class="text-sm text-gray-600 mt-2 ml-4"></div>
+        </div>
+
+        <!-- Install Status -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4"><i class="fas fa-mobile-alt mr-2 text-blue-600"></i>Installation</h2>
+            <div id="install-status" class="status-item p-4 rounded mb-2 status-pending">
+                <div class="flex items-center justify-between">
+                    <span><i class="fas fa-spinner fa-spin mr-2"></i>Checking installation...</span>
+                    <span id="install-badge" class="px-3 py-1 rounded text-sm">Pending</span>
+                </div>
+            </div>
+            <div id="install-details" class="text-sm text-gray-600 mt-2 ml-4"></div>
+        </div>
+
+        <!-- Browser Info -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4"><i class="fas fa-browser mr-2 text-blue-600"></i>Browser Information</h2>
+            <div class="space-y-2 text-sm">
+                <div><strong>User Agent:</strong> <span id="user-agent"></span></div>
+                <div><strong>Platform:</strong> <span id="platform"></span></div>
+                <div><strong>Language:</strong> <span id="language"></span></div>
+                <div><strong>Online Status:</strong> <span id="online-status"></span></div>
+                <div><strong>Screen Size:</strong> <span id="screen-size"></span></div>
+            </div>
+        </div>
+
+        <!-- Cache Status -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4"><i class="fas fa-database mr-2 text-blue-600"></i>Cache Storage</h2>
+            <div id="cache-status" class="status-item p-4 rounded mb-2 status-pending">
+                <div class="flex items-center justify-between">
+                    <span><i class="fas fa-spinner fa-spin mr-2"></i>Checking cache...</span>
+                    <span id="cache-badge" class="px-3 py-1 rounded text-sm">Pending</span>
+                </div>
+            </div>
+            <div id="cache-details" class="text-sm text-gray-600 mt-2 ml-4"></div>
+        </div>
+
+        <!-- Actions -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4"><i class="fas fa-tools mr-2 text-blue-600"></i>Actions</h2>
+            <div class="flex flex-wrap gap-2">
+                <button onclick="window.location.href='/'" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                    <i class="fas fa-home mr-2"></i>Go to App
+                </button>
+                <button onclick="location.reload()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+                    <i class="fas fa-sync mr-2"></i>Refresh Tests
+                </button>
+                <button onclick="clearCaches()" class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
+                    <i class="fas fa-trash mr-2"></i>Clear Cache
+                </button>
+            </div>
+        </div>
+
+        <!-- Summary -->
+        <div id="summary" class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-bold mb-4"><i class="fas fa-clipboard-check mr-2 text-blue-600"></i>Summary</h2>
+            <div id="summary-content" class="text-center py-4">
+                <i class="fas fa-spinner fa-spin text-4xl text-blue-600"></i>
+                <p class="mt-2 text-gray-600">Running tests...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let passCount = 0;
+        let failCount = 0;
+        let totalTests = 5;
+
+        function setStatus(elementId, badgeId, pass, message, details = '') {
+            const element = document.getElementById(elementId);
+            const badge = document.getElementById(badgeId);
+            const detailsElement = document.getElementById(elementId.replace('-status', '-details'));
+            
+            element.className = `status-item p-4 rounded mb-2 ${pass ? 'status-pass' : 'status-fail'}`;
+            element.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span><i class="fas ${pass ? 'fa-check-circle text-green-600' : 'fa-times-circle text-red-600'} mr-2"></i>${message}</span>
+                    <span class="px-3 py-1 rounded text-sm font-semibold ${pass ? 'bg-green-600 text-white' : 'bg-red-600 text-white'}">${pass ? 'PASS' : 'FAIL'}</span>
+                </div>
+            `;
+            
+            if (details) {
+                detailsElement.innerHTML = details;
+            }
+            
+            if (pass) passCount++;
+            else failCount++;
+            
+            updateSummary();
+        }
+
+        function updateSummary() {
+            if (passCount + failCount === totalTests) {
+                const summaryContent = document.getElementById('summary-content');
+                const percentage = Math.round((passCount / totalTests) * 100);
+                
+                let icon, color, text;
+                if (percentage === 100) {
+                    icon = 'fa-check-circle';
+                    color = 'text-green-600';
+                    text = 'All tests passed! Your PWA is ready for Android.';
+                } else if (percentage >= 60) {
+                    icon = 'fa-exclamation-circle';
+                    color = 'text-yellow-600';
+                    text = 'Some tests failed. Your PWA may work but with limitations.';
+                } else {
+                    icon = 'fa-times-circle';
+                    color = 'text-red-600';
+                    text = 'Critical tests failed. Please fix the issues.';
+                }
+                
+                summaryContent.innerHTML = `
+                    <i class="fas ${icon} text-6xl ${color} mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">${percentage}% Tests Passed</h3>
+                    <p class="text-lg mb-4">${passCount} passed, ${failCount} failed</p>
+                    <p class="text-gray-600">${text}</p>
+                `;
+            }
+        }
+
+        // Test Service Worker
+        async function testServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    const registration = await navigator.serviceWorker.getRegistration();
+                    if (registration) {
+                        const state = registration.active ? registration.active.state : 'not activated';
+                        setStatus('sw-status', 'sw-badge', true, 
+                            'Service worker registered and active',
+                            `State: ${state}, Scope: ${registration.scope}`
+                        );
+                    } else {
+                        setStatus('sw-status', 'sw-badge', false, 
+                            'Service worker not registered',
+                            'Please ensure service-worker.js is accessible and properly registered.'
+                        );
+                    }
+                } catch (error) {
+                    setStatus('sw-status', 'sw-badge', false, 
+                        'Error checking service worker',
+                        `Error: ${error.message}`
+                    );
+                }
+            } else {
+                setStatus('sw-status', 'sw-badge', false, 
+                    'Service workers not supported',
+                    'Your browser does not support service workers.'
+                );
+            }
+        }
+
+        // Test Manifest
+        async function testManifest() {
+            try {
+                const response = await fetch('/manifest.json');
+                if (response.ok) {
+                    const manifest = await response.json();
+                    setStatus('manifest-status', 'manifest-badge', true, 
+                        'Manifest file found and valid',
+                        `Name: ${manifest.name}, Icons: ${manifest.icons.length}, Display: ${manifest.display}`
+                    );
+                } else {
+                    setStatus('manifest-status', 'manifest-badge', false, 
+                        'Manifest file not found',
+                        `HTTP Status: ${response.status}`
+                    );
+                }
+            } catch (error) {
+                setStatus('manifest-status', 'manifest-badge', false, 
+                    'Error loading manifest',
+                    `Error: ${error.message}`
+                );
+            }
+        }
+
+        // Test HTTPS
+        function testHTTPS() {
+            const isSecure = location.protocol === 'https:' || location.hostname === 'localhost';
+            setStatus('https-status', 'https-badge', isSecure, 
+                isSecure ? 'Site served over HTTPS' : 'Site not served over HTTPS',
+                `Protocol: ${location.protocol}, Hostname: ${location.hostname}`
+            );
+        }
+
+        // Test Installation
+        function testInstallation() {
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                                window.navigator.standalone ||
+                                document.referrer.includes('android-app://');
+            
+            if (isStandalone) {
+                setStatus('install-status', 'install-badge', true, 
+                    'App is installed (running in standalone mode)',
+                    'The app is running as an installed PWA.'
+                );
+            } else {
+                const canInstall = 'BeforeInstallPromptEvent' in window || 
+                                 /Android/i.test(navigator.userAgent);
+                setStatus('install-status', 'install-badge', canInstall, 
+                    canInstall ? 'App can be installed' : 'App installation status unknown',
+                    canInstall ? 'App is ready to be installed on Android.' : 'May not support installation on this device/browser.'
+                );
+            }
+        }
+
+        // Test Cache
+        async function testCache() {
+            if ('caches' in window) {
+                try {
+                    const cacheNames = await caches.keys();
+                    if (cacheNames.length > 0) {
+                        const cache = await caches.open(cacheNames[0]);
+                        const cachedRequests = await cache.keys();
+                        setStatus('cache-status', 'cache-badge', true, 
+                            'Cache storage working',
+                            `${cacheNames.length} cache(s) found, ${cachedRequests.length} items cached`
+                        );
+                    } else {
+                        setStatus('cache-status', 'cache-badge', false, 
+                            'No caches found',
+                            'Visit the main app first to populate the cache.'
+                        );
+                    }
+                } catch (error) {
+                    setStatus('cache-status', 'cache-badge', false, 
+                        'Error checking cache',
+                        `Error: ${error.message}`
+                    );
+                }
+            } else {
+                setStatus('cache-status', 'cache-badge', false, 
+                    'Cache API not supported',
+                    'Your browser does not support the Cache API.'
+                );
+            }
+        }
+
+        // Browser Info
+        function displayBrowserInfo() {
+            document.getElementById('user-agent').textContent = navigator.userAgent;
+            document.getElementById('platform').textContent = navigator.platform;
+            document.getElementById('language').textContent = navigator.language;
+            document.getElementById('online-status').textContent = navigator.onLine ? 'Online ✓' : 'Offline ✗';
+            document.getElementById('screen-size').textContent = `${window.screen.width}x${window.screen.height}`;
+        }
+
+        // Clear caches
+        async function clearCaches() {
+            if ('caches' in window) {
+                const cacheNames = await caches.keys();
+                await Promise.all(cacheNames.map(name => caches.delete(name)));
+                alert('Cache cleared! Reload the page to re-cache resources.');
+                location.reload();
+            }
+        }
+
+        // Run all tests
+        async function runTests() {
+            displayBrowserInfo();
+            await testServiceWorker();
+            await testManifest();
+            testHTTPS();
+            testInstallation();
+            await testCache();
+        }
+
+        // Start tests when page loads
+        window.addEventListener('load', runTests);
+    </script>
+</body>
+</html>
