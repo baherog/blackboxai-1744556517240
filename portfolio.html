@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2563eb">
+    <title id="page-title">Portfolio - Innovia</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .project-card {
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        .project-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .filter-btn.active {
+            background: #2563eb;
+            color: white;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 9999;
+            overflow-y: auto;
+        }
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            max-width: 900px;
+            width: 90%;
+            margin: 20px;
+            animation: slideIn 0.3s;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e0e7ff;
+            color: #3730a3;
+            border-radius: 20px;
+            font-size: 12px;
+            margin: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="mr-4 text-2xl">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="text-xl md:text-2xl font-bold">
+                    <i class="fas fa-briefcase mr-2"></i>
+                    <span id="portfolio-title">Our Portfolio</span>
+                </h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 pb-20">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg p-8 mb-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4" id="hero-title">Our Work Speaks for Itself</h2>
+            <p class="text-lg opacity-90" id="hero-subtitle">Explore our successful projects and client solutions</p>
+        </section>
+
+        <!-- Filter Buttons -->
+        <section class="mb-6">
+            <div class="flex flex-wrap gap-2 justify-center">
+                <button onclick="filterProjects('all')" class="filter-btn active px-4 py-2 rounded-full bg-gray-200 hover:bg-blue-600 hover:text-white transition-all" id="filter-all">
+                    All Projects
+                </button>
+                <button onclick="filterProjects('call-center')" class="filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-blue-600 hover:text-white transition-all" id="filter-callcenter">
+                    Call Center
+                </button>
+                <button onclick="filterProjects('crm')" class="filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-blue-600 hover:text-white transition-all" id="filter-crm">
+                    CRM Solutions
+                </button>
+                <button onclick="filterProjects('integration')" class="filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-blue-600 hover:text-white transition-all" id="filter-integration">
+                    Integration
+                </button>
+                <button onclick="filterProjects('custom')" class="filter-btn px-4 py-2 rounded-full bg-gray-200 hover:bg-blue-600 hover:text-white transition-all" id="filter-custom">
+                    Custom Solutions
+                </button>
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <div class="text-4xl font-bold text-blue-600 mb-2">150+</div>
+                <p class="text-gray-600" id="stat-projects">Projects Completed</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <div class="text-4xl font-bold text-green-600 mb-2">98%</div>
+                <p class="text-gray-600" id="stat-satisfaction">Client Satisfaction</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <div class="text-4xl font-bold text-purple-600 mb-2">50+</div>
+                <p class="text-gray-600" id="stat-clients">Active Clients</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <div class="text-4xl font-bold text-orange-600 mb-2">24/7</div>
+                <p class="text-gray-600" id="stat-support">Support Available</p>
+            </div>
+        </section>
+
+        <!-- Projects Grid -->
+        <section id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Project 1 -->
+            <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="call-center" onclick="openModal(1)">
+                <div class="project-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <i class="fas fa-headset text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Enterprise Call Center Platform</h3>
+                    <p class="text-gray-600 text-sm mb-4">Complete call center solution with AI-powered routing and analytics</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tag">Call Center</span>
+                        <span class="tag">AI</span>
+                        <span class="tag">Analytics</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                        <span><i class="fas fa-clock mr-1"></i> 6 months</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="crm" onclick="openModal(2)">
+                <div class="project-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <i class="fas fa-users-cog text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Healthcare CRM System</h3>
+                    <p class="text-gray-600 text-sm mb-4">Customized CRM for healthcare providers with patient management</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tag">CRM</span>
+                        <span class="tag">Healthcare</span>
+                        <span class="tag">HIPAA</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                        <span><i class="fas fa-clock mr-1"></i> 8 months</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="integration" onclick="openModal(3)">
+                <div class="project-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <i class="fas fa-network-wired text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Multi-Platform Integration Hub</h3>
+                    <p class="text-gray-600 text-sm mb-4">Seamless integration between ERP, CRM, and external APIs</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tag">Integration</span>
+                        <span class="tag">API</span>
+                        <span class="tag">ERP</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span><i class="fas fa-calendar mr-1"></i> 2023</span>
+                        <span><i class="fas fa-clock mr-1"></i> 4 months</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4 -->
+            <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="call-center" onclick="openModal(4)">
+                <div class="project-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                    <i class="fas fa-phone-volume text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Cloud Contact Center</h3>
+                    <p class="text-gray-600 text-sm mb-4">Scalable cloud-based contact center with omnichannel support</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tag">Cloud</span>
+                        <span class="tag">Omnichannel</span>
+                        <span class="tag">VoIP</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                        <span><i class="fas fa-clock mr-1"></i> 5 months</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 5 -->
+            <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="crm" onclick="openModal(5)">
+                <div class="project-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <i class="fas fa-chart-line text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Sales Force Automation</h3>
+                    <p class="text-gray-600 text-sm mb-4">Complete sales automation with lead tracking and forecasting</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tag">CRM</span>
+                        <span class="tag">Sales</span>
+                        <span class="tag">Analytics</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span><i class="fas fa-calendar mr-1"></i> 2023</span>
+                        <span><i class="fas fa-clock mr-1"></i> 7 months</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 6 -->
+            <div class="project-card bg-white rounded-lg shadow-md overflow-hidden" data-category="custom" onclick="openModal(6)">
+                <div class="project-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                    <i class="fas fa-cogs text-white text-6xl"></i>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Custom Business Platform</h3>
+                    <p class="text-gray-600 text-sm mb-4">Tailored enterprise platform with unique workflow automation</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="tag">Custom</span>
+                        <span class="tag">Enterprise</span>
+                        <span class="tag">Automation</span>
+                    </div>
+                    <div class="flex items-center justify-between text-sm text-gray-500">
+                        <span><i class="fas fa-calendar mr-1"></i> 2024</span>
+                        <span class="fas fa-clock mr-1"></i> 10 months</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="mt-12 bg-white rounded-lg shadow-lg p-8 text-center">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800" id="cta-title">Ready to Start Your Project?</h2>
+            <p class="text-gray-600 mb-6" id="cta-subtitle">Let's discuss how we can help transform your business</p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="/contact-form.html" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all">
+                    <i class="fas fa-envelope mr-2"></i>
+                    <span id="cta-contact">Contact Us</span>
+                </a>
+                <a href="tel:+1234567890" class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-all">
+                    <i class="fas fa-phone mr-2"></i>
+                    <span id="cta-call">Call Now</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal -->
+    <div id="projectModal" class="modal">
+        <div class="modal-content">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <h2 id="modalTitle" class="text-2xl font-bold text-gray-800"></h2>
+                    <button onclick="closeModal()" class="text-3xl text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="modalContent"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="cms.js"></script>
+    <script>
+        // Filter projects
+        function filterProjects(category) {
+            const cards = document.querySelectorAll('.project-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            cards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    card.style.display = 'block';
+                    card.style.animation = 'fadeIn 0.5s';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Modal functions
+        const projects = {
+            1: {
+                title: 'Enterprise Call Center Platform',
+                description: 'A comprehensive call center solution built for a Fortune 500 company, featuring AI-powered call routing, real-time analytics, and advanced reporting capabilities.',
+                features: ['AI-Powered Routing', 'Real-time Analytics', 'Quality Monitoring', 'Multi-language Support', 'CRM Integration'],
+                technologies: ['Node.js', 'React', 'MongoDB', 'AWS', 'WebRTC'],
+                results: '40% increase in call resolution rate, 25% reduction in average handling time'
+            },
+            2: {
+                title: 'Healthcare CRM System',
+                description: 'Custom CRM system designed for healthcare providers, ensuring HIPAA compliance while managing patient relationships and appointments efficiently.',
+                features: ['Patient Management', 'Appointment Scheduling', 'HIPAA Compliance', 'Billing Integration', 'Reporting Dashboard'],
+                technologies: ['Python', 'Django', 'PostgreSQL', 'Vue.js', 'Docker'],
+                results: '60% improvement in patient engagement, 35% reduction in administrative tasks'
+            },
+            3: {
+                title: 'Multi-Platform Integration Hub',
+                description: 'Seamless integration solution connecting various business systems including ERP, CRM, and third-party APIs into a unified platform.',
+                features: ['API Gateway', 'Data Synchronization', 'Real-time Updates', 'Error Handling', 'Monitoring Dashboard'],
+                technologies: ['Java', 'Spring Boot', 'Kafka', 'Redis', 'Kubernetes'],
+                results: '80% reduction in manual data entry, 99.9% uptime achieved'
+            },
+            4: {
+                title: 'Cloud Contact Center',
+                description: 'Scalable cloud-based contact center solution with omnichannel support, enabling businesses to handle customer interactions across multiple channels.',
+                features: ['Omnichannel Support', 'IVR System', 'Call Recording', 'Analytics', 'Agent Dashboard'],
+                technologies: ['AWS', 'React', 'Node.js', 'Twilio', 'Elasticsearch'],
+                results: '50% increase in customer satisfaction, 30% cost reduction'
+            },
+            5: {
+                title: 'Sales Force Automation',
+                description: 'Complete sales automation platform with lead tracking, opportunity management, and AI-powered sales forecasting.',
+                features: ['Lead Management', 'Sales Pipeline', 'Forecasting', 'Email Integration', 'Mobile App'],
+                technologies: ['.NET Core', 'Angular', 'SQL Server', 'Azure', 'Power BI'],
+                results: '45% increase in sales productivity, 70% improvement in forecast accuracy'
+            },
+            6: {
+                title: 'Custom Business Platform',
+                description: 'Tailored enterprise platform designed for unique business workflows, featuring advanced automation and integration capabilities.',
+                features: ['Workflow Automation', 'Custom Forms', 'Role Management', 'API Integration', 'Reporting'],
+                technologies: ['PHP', 'Laravel', 'MySQL', 'Vue.js', 'Redis'],
+                results: '65% reduction in process time, 90% user satisfaction rate'
+            }
+        };
+
+        function openModal(id) {
+            const project = projects[id];
+            const modal = document.getElementById('projectModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalContent = document.getElementById('modalContent');
+            
+            modalTitle.textContent = project.title;
+            modalContent.innerHTML = `
+                <p class="text-gray-700 mb-6">${project.description}</p>
+                
+                <h3 class="font-bold text-lg mb-3">Key Features:</h3>
+                <ul class="list-disc list-inside mb-6 text-gray-700">
+                    ${project.features.map(f => `<li>${f}</li>`).join('')}
+                </ul>
+                
+                <h3 class="font-bold text-lg mb-3">Technologies Used:</h3>
+                <div class="flex flex-wrap gap-2 mb-6">
+                    ${project.technologies.map(t => `<span class="tag">${t}</span>`).join('')}
+                </div>
+                
+                <div class="bg-green-50 border-l-4 border-green-500 p-4 mb-6">
+                    <h3 class="font-bold text-lg mb-2 text-green-800">Results:</h3>
+                    <p class="text-green-700">${project.results}</p>
+                </div>
+                
+                <div class="flex gap-3">
+                    <button onclick="window.location.href='/contact-form.html'" class="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700">
+                        <i class="fas fa-envelope mr-2"></i>Get Similar Solution
+                    </button>
+                    <button onclick="closeModal()" class="px-6 bg-gray-200 text-gray-700 py-3 rounded-lg font-semibold hover:bg-gray-300">
+                        Close
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('projectModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on outside click
+        document.getElementById('projectModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
