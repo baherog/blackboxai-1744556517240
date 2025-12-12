@@ -1,42 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title id="title">Innovia Integrated Solutions</title>
-    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Dodger</title>
+    <meta name="description" content="A tiny dodge game you can play in the browser." />
+    <style>
+        :root {
+            --bg: #0b1020;
+            --panel: rgba(255, 255, 255, 0.06);
+            --panel-2: rgba(255, 255, 255, 0.10);
+            --text: #e8eeff;
+            --muted: rgba(232, 238, 255, 0.72);
+            --accent: #77ffcc;
+            --danger: #ff4d6d;
+            --shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+            --radius: 16px;
+        }
+
+        * { box-sizing: border-box; }
+        html, body { height: 100%; }
+        body {
+            margin: 0;
+            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji",
+                "Segoe UI Emoji";
+            background:
+                radial-gradient(1000px 600px at 20% 10%, rgba(119, 255, 204, 0.12), transparent 60%),
+                radial-gradient(900px 520px at 90% 25%, rgba(255, 77, 109, 0.12), transparent 55%),
+                radial-gradient(760px 520px at 40% 90%, rgba(115, 159, 255, 0.10), transparent 60%),
+                var(--bg);
+            color: var(--text);
+        }
+
+        a { color: var(--accent); }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 24px 16px 40px;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 18px;
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .brand h1 {
+            margin: 0;
+            letter-spacing: 0.2px;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .brand p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        .card {
+            background: var(--panel);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .game {
+            position: relative;
+            padding: 12px;
+        }
+
+        .hud {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 520px) {
+            .hud { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
+        .hud .stat {
+            background: var(--panel-2);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 10px 10px;
+        }
+
+        .label {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .value {
+            font-variant-numeric: tabular-nums;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .canvasWrap {
+            position: relative;
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(0, 0, 0, 0.22);
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3 / 4;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            padding: 18px;
+            background: rgba(5, 8, 18, 0.62);
+            backdrop-filter: blur(8px);
+        }
+
+        .overlay[hidden] { display: none; }
+
+        .overlayInner {
+            width: min(520px, 100%);
+            background: rgba(10, 14, 28, 0.78);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 18px;
+            padding: 16px;
+        }
+
+        .overlayInner h2 {
+            margin: 0 0 6px;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 0.2px;
+        }
+
+        .overlayInner p {
+            margin: 0 0 12px;
+            color: var(--muted);
+            line-height: 1.4;
+            font-size: 13px;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        button {
+            appearance: none;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text);
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+        }
+
+        button:hover { background: rgba(255, 255, 255, 0.12); }
+        button:active { transform: translateY(1px); }
+        button:focus-visible { outline: 2px solid rgba(119, 255, 204, 0.8); outline-offset: 2px; }
+        button.primary { background: rgba(119, 255, 204, 0.14); border-color: rgba(119, 255, 204, 0.35); }
+        button.danger { background: rgba(255, 77, 109, 0.14); border-color: rgba(255, 77, 109, 0.35); }
+
+        .side {
+            padding: 14px;
+        }
+
+        .side h3 {
+            margin: 0 0 8px;
+            font-size: 14px;
+            font-weight: 900;
+            letter-spacing: 0.2px;
+        }
+
+        .side p, .side li {
+            color: var(--muted);
+            line-height: 1.45;
+            font-size: 13px;
+        }
+
+        .kbd {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: var(--text);
+            font-weight: 800;
+            font-size: 12px;
+            letter-spacing: 0.2px;
+        }
+
+        footer {
+            margin-top: 16px;
+            color: rgba(232, 238, 255, 0.6);
+            font-size: 12px;
+            text-align: center;
+        }
+    </style>
 </head>
-<body class="bg-gray-100">
-    <header class="bg-blue-600 text-white p-4">
-        <div class="container mx-auto flex justify-between items-center">
-            <img src="logo-placeholder.png" alt="Innovia Logo" class="h-10" />
-            <h1 class="text-2xl font-bold ml-2">Innovia Integrated Solutions</h1>
-            <nav>
-                <ul class="flex space-x-4">
-                    <li><a href="#services" class="hover:underline">Services</a></li>
-                    <li><a href="#about" class="hover:underline">About Us</a></li>
-                    <li><a href="#contact" class="hover:underline">Contact</a></li>
+<body>
+    <div class="wrap">
+        <header>
+            <div class="brand">
+                <h1>Neon Dodger</h1>
+                <p>Dodge the falling hazards. Survive as long as you can.</p>
+            </div>
+            <div class="controls" aria-label="Top controls">
+                <button id="btnStart" class="primary" type="button">Start</button>
+                <button id="btnPause" type="button" aria-pressed="false">Pause</button>
+                <button id="btnRestart" class="danger" type="button">Restart</button>
+            </div>
+        </header>
+
+        <main class="grid">
+            <section class="card game" aria-label="Game">
+                <div class="hud" aria-label="HUD">
+                    <div class="stat">
+                        <span class="label">Score</span>
+                        <span class="value" id="statScore">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">Best</span>
+                        <span class="value" id="statBest">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">Level</span>
+                        <span class="value" id="statLevel">1</span>
+                    </div>
+                    <div class="stat">
+                        <span class="label">Status</span>
+                        <span class="value" id="statStatus">Ready</span>
+                    </div>
+                </div>
+
+                <div class="canvasWrap">
+                    <canvas id="game" width="480" height="640">
+                        Your browser does not support canvas. Try a modern browser.
+                    </canvas>
+
+                    <div id="overlay" class="overlay">
+                        <div class="overlayInner">
+                            <h2 id="overlayTitle">Neon Dodger</h2>
+                            <p id="overlayBody">
+                                Move left/right, dodge hazards, and chase a new high score.
+                            </p>
+                            <div class="controls">
+                                <button id="btnOverlayStart" class="primary" type="button">Play</button>
+                                <button id="btnOverlayHow" type="button">How to play</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="card side" aria-label="Instructions">
+                <h3>How to play</h3>
+                <p>
+                    You are the neon block near the bottom. Avoid the falling hazards for as long as possible.
+                </p>
+                <ul>
+                    <li><span class="kbd">←</span>/<span class="kbd">→</span> or <span class="kbd">A</span>/<span class="kbd">D</span>: move</li>
+                    <li><span class="kbd">P</span>: pause / resume</li>
+                    <li><span class="kbd">Space</span>: start (or restart after game over)</li>
+                    <li><span class="kbd">R</span>: restart</li>
                 </ul>
-            </nav>
-        </div>
-    </header>
-    <main class="container mx-auto p-4">
-        <section id="services" class="my-8">
-            <h2 class="text-xl font-bold">Our Services</h2>
-            <p>We specialize in Call Center Software Solutions, CRM Software Solutions, and Integration Solutions with various third parties.</p>
-        </section>
-        <section id="about" class="my-8">
-            <h2 class="text-xl font-bold">About Us</h2>
-            <p>Innovia Integrated Solutions provides tailored solutions for all business sectors with unlimited customizations.</p>
-        </section>
-        <section id="contact" class="my-8">
-            <h2 class="text-xl font-bold">Contact Us</h2>
-            <p>For inquiries, please reach out to us at <a href="mailto:info@innoviais.com" class="text-blue-600">info@innoviais.com</a>.</p>
-        </section>
-    </main>
-    <footer class="bg-blue-600 text-white p-4 text-center">
-        <p>&copy; 2023 Innovia Integrated Solutions. All rights reserved.</p>
-    </footer>
+                <p>
+                    Tip: The game speeds up over time. Stay calm and make small movements.
+                </p>
+            </aside>
+        </main>
+
+        <footer>
+            Built with plain HTML/CSS/JS. Open <code>index.html</code> to play.
+        </footer>
+    </div>
+
+    <script src="./cms.js"></script>
 </body>
 </html>
