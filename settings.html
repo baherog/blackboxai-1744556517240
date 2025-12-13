@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#2563eb">
+    <title id="page-title">Settings - Innovia</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body.dark-mode {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+        body.dark-mode .bg-white {
+            background: #2d2d2d !important;
+        }
+        body.dark-mode .text-gray-800 {
+            color: #ffffff !important;
+        }
+        body.dark-mode .text-gray-600 {
+            color: #cccccc !important;
+        }
+        body.dark-mode .text-gray-700 {
+            color: #dddddd !important;
+        }
+        body.dark-mode .bg-gray-100 {
+            background: #1a1a1a !important;
+        }
+        body.dark-mode .bg-gray-50 {
+            background: #252525 !important;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #2563eb;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        .setting-item {
+            transition: all 0.3s;
+        }
+        .setting-item:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="mr-4 text-2xl">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 id="header-title" class="text-xl md:text-2xl font-bold">
+                    <i class="fas fa-cog mr-2"></i><span id="settings-title">Settings</span>
+                </h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 pb-20">
+        <!-- Appearance Settings -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">
+                <i class="fas fa-palette mr-2 text-blue-600"></i>
+                <span id="appearance-title">Appearance</span>
+            </h2>
+            
+            <!-- Dark Mode -->
+            <div class="setting-item flex items-center justify-between p-4 border-b">
+                <div class="flex-1">
+                    <h3 class="font-semibold text-gray-800" id="dark-mode-title">Dark Mode</h3>
+                    <p class="text-sm text-gray-600" id="dark-mode-desc">Reduce eye strain in low light</p>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="darkModeToggle">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Font Size -->
+            <div class="setting-item p-4 border-b">
+                <h3 class="font-semibold text-gray-800 mb-2" id="font-size-title">Font Size</h3>
+                <div class="flex items-center gap-4">
+                    <span class="text-sm text-gray-600">A</span>
+                    <input type="range" id="fontSizeRange" min="12" max="20" value="16" class="flex-1">
+                    <span class="text-xl text-gray-600">A</span>
+                </div>
+                <p class="text-xs text-gray-500 mt-2" id="font-size-current">Current: 16px</p>
+            </div>
+
+            <!-- Theme Color -->
+            <div class="setting-item p-4">
+                <h3 class="font-semibold text-gray-800 mb-3" id="theme-color-title">Theme Color</h3>
+                <div class="grid grid-cols-4 md:grid-cols-8 gap-3">
+                    <button class="w-12 h-12 rounded-full bg-blue-600 border-4 border-transparent hover:border-gray-300" data-color="#2563eb" onclick="changeThemeColor(this)"></button>
+                    <button class="w-12 h-12 rounded-full bg-green-600 border-4 border-transparent hover:border-gray-300" data-color="#16a34a" onclick="changeThemeColor(this)"></button>
+                    <button class="w-12 h-12 rounded-full bg-purple-600 border-4 border-transparent hover:border-gray-300" data-color="#9333ea" onclick="changeThemeColor(this)"></button>
+                    <button class="w-12 h-12 rounded-full bg-red-600 border-4 border-transparent hover:border-gray-300" data-color="#dc2626" onclick="changeThemeColor(this)"></button>
+                    <button class="w-12 h-12 rounded-full bg-orange-600 border-4 border-transparent hover:border-gray-300" data-color="#ea580c" onclick="changeThemeColor(this)"></button>
+                    <button class="w-12 h-12 rounded-full bg-pink-600 border-4 border-transparent hover:border-gray-300" data-color="#db2777" onclick="changeThemeColor(this)"></button>
+                    <button class="w-12 h-12 rounded-full bg-teal-600 border-4 border-transparent hover:border-gray-300" data-color="#0d9488" onclick="changeThemeColor(this)"></button>
+                    <button class="w-12 h-12 rounded-full bg-indigo-600 border-4 border-transparent hover:border-gray-300" data-color="#4f46e5" onclick="changeThemeColor(this)"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Language Settings -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">
+                <i class="fas fa-language mr-2 text-blue-600"></i>
+                <span id="language-title">Language</span>
+            </h2>
+            
+            <div class="space-y-2">
+                <button onclick="setLanguage('en')" class="setting-item w-full flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                    <div class="flex items-center">
+                        <i class="fas fa-flag-usa text-2xl mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">English</h3>
+                            <p class="text-sm text-gray-600">English (United States)</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-check text-blue-600" id="lang-en-check"></i>
+                </button>
+                
+                <button onclick="setLanguage('ar')" class="setting-item w-full flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50">
+                    <div class="flex items-center">
+                        <i class="fas fa-flag text-2xl mr-3"></i>
+                        <div>
+                            <h3 class="font-semibold text-gray-800">العربية</h3>
+                            <p class="text-sm text-gray-600">Arabic</p>
+                        </div>
+                    </div>
+                    <i class="fas fa-check text-blue-600 hidden" id="lang-ar-check"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Notifications Settings -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">
+                <i class="fas fa-bell mr-2 text-blue-600"></i>
+                <span id="notifications-title">Notifications</span>
+            </h2>
+            
+            <div class="setting-item flex items-center justify-between p-4 border-b">
+                <div class="flex-1">
+                    <h3 class="font-semibold text-gray-800" id="push-notif-title">Push Notifications</h3>
+                    <p class="text-sm text-gray-600" id="push-notif-desc">Receive updates and news</p>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="pushNotifToggle" onchange="togglePushNotifications(this)">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item flex items-center justify-between p-4 border-b">
+                <div class="flex-1">
+                    <h3 class="font-semibold text-gray-800" id="sound-title">Sound</h3>
+                    <p class="text-sm text-gray-600" id="sound-desc">Play sound for notifications</p>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="soundToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item flex items-center justify-between p-4">
+                <div class="flex-1">
+                    <h3 class="font-semibold text-gray-800" id="vibration-title">Vibration</h3>
+                    <p class="text-sm text-gray-600" id="vibration-desc">Vibrate for notifications</p>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="vibrationToggle" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </section>
+
+        <!-- Data & Storage -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">
+                <i class="fas fa-database mr-2 text-blue-600"></i>
+                <span id="data-title">Data & Storage</span>
+            </h2>
+            
+            <div class="setting-item p-4 border-b">
+                <div class="flex items-center justify-between mb-2">
+                    <h3 class="font-semibold text-gray-800" id="cache-title">Cache Size</h3>
+                    <span id="cache-size" class="text-sm text-gray-600">Calculating...</span>
+                </div>
+                <button onclick="clearAppCache()" class="w-full bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600">
+                    <i class="fas fa-trash mr-2"></i><span id="clear-cache-btn">Clear Cache</span>
+                </button>
+            </div>
+
+            <div class="setting-item flex items-center justify-between p-4">
+                <div class="flex-1">
+                    <h3 class="font-semibold text-gray-800" id="offline-title">Offline Mode</h3>
+                    <p class="text-sm text-gray-600" id="offline-desc">Save data for offline use</p>
+                </div>
+                <label class="switch">
+                    <input type="checkbox" id="offlineToggle" checked disabled>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </section>
+
+        <!-- About & Info -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">
+                <i class="fas fa-info-circle mr-2 text-blue-600"></i>
+                <span id="about-section-title">About</span>
+            </h2>
+            
+            <div class="space-y-3 text-sm">
+                <div class="flex justify-between p-2">
+                    <span class="text-gray-600" id="version-label">Version</span>
+                    <span class="font-semibold text-gray-800">1.0.0</span>
+                </div>
+                <div class="flex justify-between p-2">
+                    <span class="text-gray-600" id="build-label">Build</span>
+                    <span class="font-semibold text-gray-800">2024.12.12</span>
+                </div>
+                <div class="flex justify-between p-2">
+                    <span class="text-gray-600" id="platform-label">Platform</span>
+                    <span class="font-semibold text-gray-800" id="platform-value">Android</span>
+                </div>
+            </div>
+
+            <div class="mt-4 pt-4 border-t space-y-2">
+                <a href="/privacy.html" class="setting-item block p-3 hover:bg-gray-50 rounded">
+                    <i class="fas fa-shield-alt mr-2 text-blue-600"></i>
+                    <span id="privacy-link">Privacy Policy</span>
+                </a>
+                <a href="/terms.html" class="setting-item block p-3 hover:bg-gray-50 rounded">
+                    <i class="fas fa-file-contract mr-2 text-blue-600"></i>
+                    <span id="terms-link">Terms of Service</span>
+                </a>
+                <a href="mailto:info@innoviais.com" class="setting-item block p-3 hover:bg-gray-50 rounded">
+                    <i class="fas fa-envelope mr-2 text-blue-600"></i>
+                    <span id="contact-link">Contact Support</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- App Actions -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-4">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">
+                <i class="fas fa-tools mr-2 text-blue-600"></i>
+                <span id="actions-title">Actions</span>
+            </h2>
+            
+            <div class="space-y-3">
+                <button onclick="shareApp()" class="setting-item w-full flex items-center p-4 border rounded-lg hover:bg-gray-50">
+                    <i class="fas fa-share-alt text-2xl text-blue-600 mr-4"></i>
+                    <div class="text-left">
+                        <h3 class="font-semibold text-gray-800" id="share-title">Share App</h3>
+                        <p class="text-sm text-gray-600" id="share-desc">Share with friends</p>
+                    </div>
+                </button>
+
+                <button onclick="checkForUpdates()" class="setting-item w-full flex items-center p-4 border rounded-lg hover:bg-gray-50">
+                    <i class="fas fa-sync-alt text-2xl text-blue-600 mr-4"></i>
+                    <div class="text-left">
+                        <h3 class="font-semibold text-gray-800" id="update-title">Check for Updates</h3>
+                        <p class="text-sm text-gray-600" id="update-desc">Get the latest version</p>
+                    </div>
+                </button>
+
+                <button onclick="resetSettings()" class="setting-item w-full flex items-center p-4 border rounded-lg hover:bg-red-50">
+                    <i class="fas fa-undo text-2xl text-red-600 mr-4"></i>
+                    <div class="text-left">
+                        <h3 class="font-semibold text-red-600" id="reset-title">Reset Settings</h3>
+                        <p class="text-sm text-gray-600" id="reset-desc">Restore default settings</p>
+                    </div>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="cms.js"></script>
+    <script>
+        // Dark Mode
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+        
+        if (savedDarkMode) {
+            document.body.classList.add('dark-mode');
+            darkModeToggle.checked = true;
+        }
+
+        darkModeToggle.addEventListener('change', function() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', this.checked);
+            updateMetaThemeColor();
+        });
+
+        // Font Size
+        const fontSizeRange = document.getElementById('fontSizeRange');
+        const savedFontSize = localStorage.getItem('fontSize') || 16;
+        fontSizeRange.value = savedFontSize;
+        document.documentElement.style.fontSize = savedFontSize + 'px';
+        document.getElementById('font-size-current').textContent = `Current: ${savedFontSize}px`;
+
+        fontSizeRange.addEventListener('input', function() {
+            document.documentElement.style.fontSize = this.value + 'px';
+            document.getElementById('font-size-current').textContent = `Current: ${this.value}px`;
+            localStorage.setItem('fontSize', this.value);
+        });
+
+        // Theme Color
+        function changeThemeColor(button) {
+            const color = button.dataset.color;
+            document.querySelectorAll('[data-color]').forEach(btn => {
+                btn.classList.remove('border-gray-800');
+                btn.classList.add('border-transparent');
+            });
+            button.classList.remove('border-transparent');
+            button.classList.add('border-gray-800');
+            
+            document.documentElement.style.setProperty('--theme-color', color);
+            localStorage.setItem('themeColor', color);
+            updateMetaThemeColor();
+        }
+
+        function updateMetaThemeColor() {
+            const color = localStorage.getItem('themeColor') || '#2563eb';
+            document.querySelector('meta[name="theme-color"]').setAttribute('content', color);
+        }
+
+        // Language
+        function setLanguage(lang) {
+            changeLanguage(lang);
+            document.getElementById('lang-en-check').classList.toggle('hidden', lang !== 'en');
+            document.getElementById('lang-ar-check').classList.toggle('hidden', lang !== 'ar');
+            setTimeout(() => location.reload(), 500);
+        }
+
+        // Initialize language checks
+        const currentLang = localStorage.getItem('preferredLanguage') || 'en';
+        document.getElementById('lang-en-check').classList.toggle('hidden', currentLang !== 'en');
+        document.getElementById('lang-ar-check').classList.toggle('hidden', currentLang !== 'ar');
+
+        // Push Notifications
+        async function togglePushNotifications(toggle) {
+            if (toggle.checked) {
+                if ('Notification' in window) {
+                    const permission = await Notification.requestPermission();
+                    if (permission === 'granted') {
+                        localStorage.setItem('pushNotifications', 'true');
+                        new Notification('Innovia', {
+                            body: 'Notifications enabled!',
+                            icon: '/icons/icon-192x192.png'
+                        });
+                    } else {
+                        toggle.checked = false;
+                    }
+                }
+            } else {
+                localStorage.setItem('pushNotifications', 'false');
+            }
+        }
+
+        // Cache Size
+        async function calculateCacheSize() {
+            if ('caches' in window) {
+                try {
+                    const cacheNames = await caches.keys();
+                    let totalSize = 0;
+                    
+                    for (const name of cacheNames) {
+                        const cache = await caches.open(name);
+                        const keys = await cache.keys();
+                        totalSize += keys.length;
+                    }
+                    
+                    document.getElementById('cache-size').textContent = 
+                        totalSize > 0 ? `${totalSize} items` : 'Empty';
+                } catch (error) {
+                    document.getElementById('cache-size').textContent = 'Unknown';
+                }
+            }
+        }
+
+        // Clear Cache
+        async function clearAppCache() {
+            if (confirm('Clear all cached data? The app will need to reload.')) {
+                if ('caches' in window) {
+                    const cacheNames = await caches.keys();
+                    await Promise.all(cacheNames.map(name => caches.delete(name)));
+                }
+                localStorage.removeItem('darkMode');
+                localStorage.removeItem('fontSize');
+                localStorage.removeItem('themeColor');
+                alert('Cache cleared successfully!');
+                location.reload();
+            }
+        }
+
+        // Share App
+        async function shareApp() {
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Innovia Integrated Solutions',
+                        text: 'Check out this amazing app!',
+                        url: window.location.origin
+                    });
+                } catch (error) {
+                    console.log('Share cancelled');
+                }
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(window.location.origin);
+                alert('Link copied to clipboard!');
+            }
+        }
+
+        // Check for Updates
+        async function checkForUpdates() {
+            const updateBtn = document.querySelector('[onclick="checkForUpdates()"]');
+            const icon = updateBtn.querySelector('i');
+            icon.classList.add('fa-spin');
+            
+            if ('serviceWorker' in navigator) {
+                const registration = await navigator.serviceWorker.getRegistration();
+                if (registration) {
+                    await registration.update();
+                }
+            }
+            
+            setTimeout(() => {
+                icon.classList.remove('fa-spin');
+                alert('You are using the latest version!');
+            }, 1500);
+        }
+
+        // Reset Settings
+        function resetSettings() {
+            if (confirm('Reset all settings to default?')) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+
+        // Platform Detection
+        document.getElementById('platform-value').textContent = 
+            /Android/i.test(navigator.userAgent) ? 'Android' :
+            /iPhone|iPad|iPod/i.test(navigator.userAgent) ? 'iOS' :
+            'Web';
+
+        // Initialize
+        calculateCacheSize();
+        updateMetaThemeColor();
+
+        // Load saved settings
+        document.getElementById('soundToggle').checked = 
+            localStorage.getItem('sound') !== 'false';
+        document.getElementById('vibrationToggle').checked = 
+            localStorage.getItem('vibration') !== 'false';
+        document.getElementById('pushNotifToggle').checked = 
+            localStorage.getItem('pushNotifications') === 'true';
+
+        // Save settings
+        document.getElementById('soundToggle').addEventListener('change', function() {
+            localStorage.setItem('sound', this.checked);
+        });
+        document.getElementById('vibrationToggle').addEventListener('change', function() {
+            localStorage.setItem('vibration', this.checked);
+        });
+    </script>
+</body>
+</html>

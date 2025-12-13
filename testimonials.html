@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2563eb">
+    <title id="page-title">Client Testimonials - Innovia</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .testimonial-card {
+            transition: all 0.3s;
+        }
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+        .rating-stars {
+            color: #fbbf24;
+        }
+        .video-thumbnail {
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+        .video-thumbnail:hover .play-button {
+            transform: scale(1.1);
+        }
+        .play-button {
+            transition: transform 0.3s;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="mr-4 text-2xl">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="text-xl md:text-2xl font-bold">
+                    <i class="fas fa-star mr-2"></i>
+                    <span id="testimonials-title">Client Testimonials</span>
+                </h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 pb-20">
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-r from-purple-500 to-pink-600 text-white rounded-lg p-8 mb-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4" id="hero-title">What Our Clients Say</h2>
+            <p class="text-lg opacity-90" id="hero-subtitle">Real stories from satisfied customers</p>
+        </section>
+
+        <!-- Overall Stats -->
+        <section class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <div class="text-4xl font-bold text-yellow-500 mb-2">4.9</div>
+                <div class="rating-stars mb-2">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+                <p class="text-sm text-gray-600" id="avg-rating">Average Rating</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <div class="text-4xl font-bold text-blue-600 mb-2">500+</div>
+                <p class="text-gray-600" id="total-reviews">Total Reviews</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <div class="text-4xl font-bold text-green-600 mb-2">98%</div>
+                <p class="text-gray-600" id="recommend">Would Recommend</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 text-center">
+                <div class="text-4xl font-bold text-purple-600 mb-2">200+</div>
+                <p class="text-gray-600" id="clients">Happy Clients</p>
+            </div>
+        </section>
+
+        <!-- Featured Testimonials -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800" id="featured-title">Featured Reviews</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mr-4">
+                            JD
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-lg">John Davidson</h3>
+                            <p class="text-sm text-gray-600">CEO, TechCorp Inc.</p>
+                            <div class="rating-stars text-sm mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed">
+                        "Innovia transformed our customer service operations completely. Their call center solution increased our efficiency by 40% and customer satisfaction scores went through the roof. The team was professional, responsive, and delivered beyond our expectations."
+                    </p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        <span>Verified Customer</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-400 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mr-4">
+                            SM
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-lg">Sarah Martinez</h3>
+                            <p class="text-sm text-gray-600">Director, HealthCare Plus</p>
+                            <div class="rating-stars text-sm mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed">
+                        "The CRM system they developed for us is exactly what we needed. It's intuitive, powerful, and has significantly improved our patient engagement. The support team is always there when we need them. Highly recommended!"
+                    </p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        <span>Verified Customer</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mr-4">
+                            MK
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-lg">Mohammed Khalil</h3>
+                            <p class="text-sm text-gray-600">IT Manager, Al Majd Group</p>
+                            <div class="rating-stars text-sm mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed">
+                        "أفضل حل تقني عملنا معه. فريق إنوفيا محترف جداً وفهموا احتياجاتنا تماماً. النظام يعمل بشكل ممتاز والدعم الفني ممتاز. أنصح بهم بشدة!"
+                    </p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        <span>Verified Customer</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 4 -->
+                <div class="testimonial-card bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-orange-400 to-orange-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mr-4">
+                            LW
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-lg">Lisa Wang</h3>
+                            <p class="text-sm text-gray-600">Operations Director, RetailMax</p>
+                            <div class="rating-stars text-sm mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed">
+                        "We integrated their solution with our existing systems seamlessly. The integration was smooth, and the results were immediate. Our team adapted quickly, and we've seen a 35% improvement in productivity."
+                    </p>
+                    <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                        <span>Verified Customer</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Video Testimonials -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800" id="video-title">Video Testimonials</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="video-thumbnail bg-gray-200 rounded-lg overflow-hidden h-48 relative" onclick="alert('Video player would open here')">
+                    <div class="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
+                        <div class="play-button bg-white rounded-full w-16 h-16 flex items-center justify-center">
+                            <i class="fas fa-play text-blue-600 text-2xl ml-1"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <p class="text-white font-semibold">Tech Solutions Inc.</p>
+                        <p class="text-white text-sm opacity-75">3:24</p>
+                    </div>
+                </div>
+                
+                <div class="video-thumbnail bg-gray-200 rounded-lg overflow-hidden h-48 relative" onclick="alert('Video player would open here')">
+                    <div class="absolute inset-0 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
+                        <div class="play-button bg-white rounded-full w-16 h-16 flex items-center justify-center">
+                            <i class="fas fa-play text-green-600 text-2xl ml-1"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <p class="text-white font-semibold">Healthcare Group</p>
+                        <p class="text-white text-sm opacity-75">2:45</p>
+                    </div>
+                </div>
+                
+                <div class="video-thumbnail bg-gray-200 rounded-lg overflow-hidden h-48 relative" onclick="alert('Video player would open here')">
+                    <div class="absolute inset-0 bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+                        <div class="play-button bg-white rounded-full w-16 h-16 flex items-center justify-center">
+                            <i class="fas fa-play text-orange-600 text-2xl ml-1"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                        <p class="text-white font-semibold">Retail Corporation</p>
+                        <p class="text-white text-sm opacity-75">4:12</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- More Reviews -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800" id="more-reviews-title">More Client Reviews</h2>
+            
+            <div class="space-y-4">
+                <!-- Review 1 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-start mb-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-300 to-blue-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                            RP
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="font-bold">Robert Palmer</h4>
+                                <span class="text-sm text-gray-500">2 weeks ago</span>
+                            </div>
+                            <div class="rating-stars text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">
+                        Outstanding service! The implementation was smooth, and the training provided was comprehensive. Our team is now more efficient than ever.
+                    </p>
+                    <div class="mt-3 flex items-center text-sm text-gray-500">
+                        <button class="mr-4 hover:text-blue-600"><i class="fas fa-thumbs-up mr-1"></i>Helpful (24)</button>
+                        <button class="hover:text-blue-600"><i class="fas fa-reply mr-1"></i>Reply</button>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-start mb-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-pink-300 to-pink-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                            AJ
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="font-bold">Amira Johnson</h4>
+                                <span class="text-sm text-gray-500">1 month ago</span>
+                            </div>
+                            <div class="rating-stars text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">
+                        Best investment we've made this year. The ROI has been incredible. Customer support is responsive and knowledgeable.
+                    </p>
+                    <div class="mt-3 flex items-center text-sm text-gray-500">
+                        <button class="mr-4 hover:text-blue-600"><i class="fas fa-thumbs-up mr-1"></i>Helpful (18)</button>
+                        <button class="hover:text-blue-600"><i class="fas fa-reply mr-1"></i>Reply</button>
+                    </div>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex items-start mb-3">
+                        <div class="w-12 h-12 bg-gradient-to-br from-teal-300 to-teal-500 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                            DK
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-1">
+                                <h4 class="font-bold">David Kim</h4>
+                                <span class="text-sm text-gray-500">2 months ago</span>
+                            </div>
+                            <div class="rating-stars text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">
+                        Great product with excellent features. Minor learning curve at first, but the documentation and support team made it easy. Highly recommend!
+                    </p>
+                    <div class="mt-3 flex items-center text-sm text-gray-500">
+                        <button class="mr-4 hover:text-blue-600"><i class="fas fa-thumbs-up mr-1"></i>Helpful (31)</button>
+                        <button class="hover:text-blue-600"><i class="fas fa-reply mr-1"></i>Reply</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-6">
+                <button class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">
+                    <i class="fas fa-plus mr-2"></i>Load More Reviews
+                </button>
+            </div>
+        </section>
+
+        <!-- Leave a Review -->
+        <section class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800" id="leave-review-title">Share Your Experience</h2>
+            <p class="text-gray-600 mb-6" id="leave-review-subtitle">We'd love to hear from you!</p>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Your Rating</label>
+                    <div class="text-3xl">
+                        <i class="far fa-star cursor-pointer hover:text-yellow-500" onclick="setRating(1)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-500" onclick="setRating(2)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-500" onclick="setRating(3)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-500" onclick="setRating(4)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-500" onclick="setRating(5)"></i>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Your Name</label>
+                    <input type="text" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your name">
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Your Review</label>
+                    <textarea rows="4" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Tell us about your experience..."></textarea>
+                </div>
+                
+                <button class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700">
+                    <i class="fas fa-paper-plane mr-2"></i>Submit Review
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="cms.js"></script>
+    <script>
+        function setRating(rating) {
+            const stars = document.querySelectorAll('.far.fa-star, .fas.fa-star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.remove('far');
+                    star.classList.add('fas', 'text-yellow-500');
+                } else {
+                    star.classList.remove('fas', 'text-yellow-500');
+                    star.classList.add('far');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

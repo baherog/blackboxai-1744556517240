@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2563eb">
+    <title id="page-title">Contact Us - Innovia</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .form-group {
+            transition: all 0.3s;
+        }
+        .form-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        .success-animation {
+            animation: successPulse 0.6s ease-in-out;
+        }
+        @keyframes successPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        .contact-method {
+            transition: all 0.3s;
+        }
+        .contact-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="mr-4 text-2xl">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="text-xl md:text-2xl font-bold">
+                    <i class="fas fa-envelope mr-2"></i>
+                    <span id="contact-title">Contact Us</span>
+                </h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 pb-20">
+        <!-- Contact Form -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-2 text-gray-800" id="form-title">Send us a Message</h2>
+            <p class="text-gray-600 mb-6" id="form-subtitle">We'll get back to you within 24 hours</p>
+
+            <form id="contactForm" class="space-y-4">
+                <!-- Name -->
+                <div class="form-group">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2" id="name-label">
+                        <i class="fas fa-user mr-1"></i> Full Name *
+                    </label>
+                    <input 
+                        type="text" 
+                        id="name" 
+                        name="name"
+                        required
+                        class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg"
+                        placeholder="Enter your full name">
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2" id="email-label">
+                        <i class="fas fa-envelope mr-1"></i> Email Address *
+                    </label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email"
+                        required
+                        class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg"
+                        placeholder="your.email@example.com">
+                </div>
+
+                <!-- Phone -->
+                <div class="form-group">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2" id="phone-label">
+                        <i class="fas fa-phone mr-1"></i> Phone Number
+                    </label>
+                    <input 
+                        type="tel" 
+                        id="phone" 
+                        name="phone"
+                        class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg"
+                        placeholder="+1 (234) 567-8900">
+                </div>
+
+                <!-- Subject -->
+                <div class="form-group">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2" id="subject-label">
+                        <i class="fas fa-tag mr-1"></i> Subject *
+                    </label>
+                    <select 
+                        id="subject" 
+                        name="subject"
+                        required
+                        class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg">
+                        <option value="">Select a subject...</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="sales">Sales & Pricing</option>
+                        <option value="support">Technical Support</option>
+                        <option value="partnership">Partnership</option>
+                        <option value="feedback">Feedback</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- Message -->
+                <div class="form-group">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2" id="message-label">
+                        <i class="fas fa-comment mr-1"></i> Message *
+                    </label>
+                    <textarea 
+                        id="message" 
+                        name="message"
+                        required
+                        rows="6"
+                        class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg resize-none"
+                        placeholder="Tell us how we can help you..."></textarea>
+                    <p class="text-xs text-gray-500 mt-1" id="char-count">0 / 500 characters</p>
+                </div>
+
+                <!-- Attachment -->
+                <div class="form-group">
+                    <label class="block text-sm font-semibold text-gray-700 mb-2" id="attachment-label">
+                        <i class="fas fa-paperclip mr-1"></i> Attachment (Optional)
+                    </label>
+                    <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 text-center hover:border-blue-500 cursor-pointer">
+                        <input type="file" id="attachment" name="attachment" class="hidden" accept="image/*,.pdf,.doc,.docx">
+                        <label for="attachment" class="cursor-pointer">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-2"></i>
+                            <p class="text-sm text-gray-600" id="upload-text">Click to upload or drag and drop</p>
+                            <p class="text-xs text-gray-500">PDF, DOC, or Images (Max 5MB)</p>
+                        </label>
+                    </div>
+                    <div id="file-preview" class="mt-2 hidden">
+                        <div class="flex items-center justify-between bg-blue-50 p-2 rounded">
+                            <span class="text-sm truncate" id="file-name"></span>
+                            <button type="button" onclick="removeFile()" class="text-red-500">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="form-group">
+                    <label class="flex items-center cursor-pointer">
+                        <input type="checkbox" id="newsletter" name="newsletter" class="mr-3 w-5 h-5 text-blue-600">
+                        <span class="text-sm text-gray-700" id="newsletter-label">
+                            Subscribe to our newsletter for updates and offers
+                        </span>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex gap-3">
+                    <button 
+                        type="submit" 
+                        class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-all"
+                        id="submit-btn">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        <span id="submit-text">Send Message</span>
+                    </button>
+                    <button 
+                        type="reset" 
+                        class="bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-all"
+                        id="reset-btn">
+                        <i class="fas fa-undo mr-2"></i>
+                        <span id="reset-text">Reset</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Contact Methods -->
+        <section class="mb-6">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800" id="other-ways-title">Other Ways to Reach Us</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Email -->
+                <a href="mailto:info@innoviais.com" class="contact-method bg-white rounded-lg shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-envelope text-3xl text-blue-600"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2" id="email-us">Email Us</h3>
+                    <p class="text-blue-600 text-sm">info@innoviais.com</p>
+                </a>
+
+                <!-- Phone -->
+                <a href="tel:+1234567890" class="contact-method bg-white rounded-lg shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-phone text-3xl text-green-600"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2" id="call-us">Call Us</h3>
+                    <p class="text-green-600 text-sm">+1 (234) 567-890</p>
+                </a>
+
+                <!-- WhatsApp -->
+                <a href="https://wa.me/1234567890" class="contact-method bg-white rounded-lg shadow-md p-6 text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fab fa-whatsapp text-3xl text-green-600"></i>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2" id="whatsapp-us">WhatsApp</h3>
+                    <p class="text-green-600 text-sm">Chat with us</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Office Hours -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">
+                <i class="fas fa-clock mr-2 text-blue-600"></i>
+                <span id="hours-title">Office Hours</span>
+            </h2>
+            <div class="space-y-2 text-sm">
+                <div class="flex justify-between">
+                    <span class="text-gray-600" id="weekdays">Monday - Friday:</span>
+                    <span class="font-semibold">9:00 AM - 6:00 PM</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600" id="saturday">Saturday:</span>
+                    <span class="font-semibold">10:00 AM - 4:00 PM</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600" id="sunday">Sunday:</span>
+                    <span class="font-semibold text-red-600">Closed</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Location -->
+        <section class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-bold mb-4 text-gray-800">
+                <i class="fas fa-map-marker-alt mr-2 text-blue-600"></i>
+                <span id="location-title">Our Location</span>
+            </h2>
+            <div class="mb-4">
+                <p class="text-gray-700 mb-2">
+                    <i class="fas fa-building mr-2 text-gray-500"></i>
+                    <span id="address">123 Business Street, Suite 100</span>
+                </p>
+                <p class="text-gray-700 mb-2">
+                    <i class="fas fa-city mr-2 text-gray-500"></i>
+                    <span id="city">City, State 12345</span>
+                </p>
+                <p class="text-gray-700">
+                    <i class="fas fa-globe mr-2 text-gray-500"></i>
+                    <span id="country">Country</span>
+                </p>
+            </div>
+            <button onclick="openMap()" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700">
+                <i class="fas fa-directions mr-2"></i>
+                <span id="get-directions">Get Directions</span>
+            </button>
+        </section>
+    </main>
+
+    <script src="cms.js"></script>
+    <script>
+        // Form Handling
+        const form = document.getElementById('contactForm');
+        const messageTextarea = document.getElementById('message');
+        const charCount = document.getElementById('char-count');
+        const fileInput = document.getElementById('attachment');
+        const filePreview = document.getElementById('file-preview');
+        const fileName = document.getElementById('file-name');
+
+        // Character counter
+        messageTextarea.addEventListener('input', function() {
+            const length = this.value.length;
+            charCount.textContent = `${length} / 500 characters`;
+            if (length > 500) {
+                charCount.classList.add('text-red-600');
+            } else {
+                charCount.classList.remove('text-red-600');
+            }
+        });
+
+        // File upload
+        fileInput.addEventListener('change', function() {
+            if (this.files.length > 0) {
+                const file = this.files[0];
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must be less than 5MB');
+                    this.value = '';
+                    return;
+                }
+                fileName.textContent = file.name;
+                filePreview.classList.remove('hidden');
+            }
+        });
+
+        function removeFile() {
+            fileInput.value = '';
+            filePreview.classList.add('hidden');
+        }
+
+        // Form submission
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submit-btn');
+            const submitText = document.getElementById('submit-text');
+            const originalText = submitText.textContent;
+            
+            // Disable button and show loading
+            submitBtn.disabled = true;
+            submitText.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Sending...';
+            
+            // Simulate sending (replace with actual API call)
+            await new Promise(resolve => setTimeout(resolve, 2000));
+            
+            // Show success
+            submitBtn.classList.add('success-animation');
+            submitBtn.classList.remove('bg-blue-600');
+            submitBtn.classList.add('bg-green-600');
+            submitText.innerHTML = '<i class="fas fa-check mr-2"></i>Sent Successfully!';
+            
+            // Store in localStorage for offline capability
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value,
+                newsletter: document.getElementById('newsletter').checked,
+                timestamp: new Date().toISOString()
+            };
+            
+            const submissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
+            submissions.push(formData);
+            localStorage.setItem('contactSubmissions', JSON.stringify(submissions));
+            
+            // Vibrate if supported
+            if (navigator.vibrate) {
+                navigator.vibrate(200);
+            }
+            
+            // Reset form after 2 seconds
+            setTimeout(() => {
+                form.reset();
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('bg-green-600', 'success-animation');
+                submitBtn.classList.add('bg-blue-600');
+                submitText.textContent = originalText;
+                filePreview.classList.add('hidden');
+                charCount.textContent = '0 / 500 characters';
+            }, 2000);
+        });
+
+        // Open map
+        function openMap() {
+            // Replace with actual coordinates
+            const lat = 40.7128;
+            const lng = -74.0060;
+            
+            if (/Android/i.test(navigator.userAgent)) {
+                window.open(`geo:${lat},${lng}?q=${lat},${lng}(Innovia)`);
+            } else {
+                window.open(`https://maps.google.com/?q=${lat},${lng}`);
+            }
+        }
+
+        // Auto-save form data
+        const formInputs = form.querySelectorAll('input, textarea, select');
+        formInputs.forEach(input => {
+            // Load saved data
+            const savedValue = localStorage.getItem(`form_${input.id}`);
+            if (savedValue && input.type !== 'file') {
+                if (input.type === 'checkbox') {
+                    input.checked = savedValue === 'true';
+                } else {
+                    input.value = savedValue;
+                }
+            }
+            
+            // Save on input
+            input.addEventListener('input', function() {
+                if (this.type === 'checkbox') {
+                    localStorage.setItem(`form_${this.id}`, this.checked);
+                } else {
+                    localStorage.setItem(`form_${this.id}`, this.value);
+                }
+            });
+        });
+
+        // Clear saved form data on successful submission
+        form.addEventListener('reset', function() {
+            formInputs.forEach(input => {
+                localStorage.removeItem(`form_${input.id}`);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2563eb">
+    <title>Device Info - Innovia</title>
+    <link rel="manifest" href="/manifest.json">
+    <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .info-card {
+            transition: all 0.3s;
+        }
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .android-detected {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header class="bg-blue-600 text-white p-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="mr-4 text-2xl">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h1 class="text-xl md:text-2xl font-bold">
+                    <i class="fas fa-mobile-alt mr-2"></i>
+                    Device Information
+                </h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4 pb-20">
+        <!-- Android Detection Alert -->
+        <div id="androidAlert" class="hidden bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded" role="alert">
+            <div class="flex items-center">
+                <i class="fab fa-android text-4xl mr-4 android-detected"></i>
+                <div>
+                    <p class="font-bold">Android Device Detected! 🎉</p>
+                    <p class="text-sm">This app is optimized for your device.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Device Type -->
+        <section class="info-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <i class="fas fa-mobile-alt text-blue-600 mr-3 text-3xl"></i>
+                Device Type
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="text-center p-4 bg-gray-50 rounded">
+                    <div class="text-3xl mb-2" id="deviceTypeIcon">📱</div>
+                    <p class="font-semibold" id="deviceType">Loading...</p>
+                </div>
+                <div class="text-center p-4 bg-gray-50 rounded">
+                    <div class="text-3xl mb-2">📐</div>
+                    <p class="font-semibold" id="deviceCategory">Loading...</p>
+                </div>
+                <div class="text-center p-4 bg-gray-50 rounded">
+                    <div class="text-3xl mb-2">👆</div>
+                    <p class="font-semibold" id="touchSupport">Loading...</p>
+                </div>
+                <div class="text-center p-4 bg-gray-50 rounded">
+                    <div class="text-3xl mb-2">📲</div>
+                    <p class="font-semibold" id="standaloneMode">Loading...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Operating System -->
+        <section class="info-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <i class="fab fa-android text-green-600 mr-3 text-3xl"></i>
+                Operating System
+            </h2>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                    <span class="font-semibold">OS Name:</span>
+                    <span id="osName" class="text-blue-600">Loading...</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                    <span class="font-semibold">OS Version:</span>
+                    <span id="osVersion" class="text-blue-600">Loading...</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                    <span class="font-semibold">Platform:</span>
+                    <span id="platform" class="text-blue-600">Loading...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Browser Info -->
+        <section class="info-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <i class="fas fa-browser text-purple-600 mr-3 text-3xl"></i>
+                Browser Information
+            </h2>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                    <span class="font-semibold">Browser:</span>
+                    <span id="browserName" class="text-blue-600">Loading...</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                    <span class="font-semibold">Version:</span>
+                    <span id="browserVersion" class="text-blue-600">Loading...</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                    <span class="font-semibold">Language:</span>
+                    <span id="browserLang" class="text-blue-600">Loading...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screen Info -->
+        <section class="info-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <i class="fas fa-desktop text-orange-600 mr-3 text-3xl"></i>
+                Screen Information
+            </h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="p-3 bg-gray-50 rounded">
+                    <p class="text-sm text-gray-600">Resolution</p>
+                    <p id="screenResolution" class="font-semibold text-lg">Loading...</p>
+                </div>
+                <div class="p-3 bg-gray-50 rounded">
+                    <p class="text-sm text-gray-600">Viewport</p>
+                    <p id="viewport" class="font-semibold text-lg">Loading...</p>
+                </div>
+                <div class="p-3 bg-gray-50 rounded">
+                    <p class="text-sm text-gray-600">Pixel Ratio</p>
+                    <p id="pixelRatio" class="font-semibold text-lg">Loading...</p>
+                </div>
+                <div class="p-3 bg-gray-50 rounded">
+                    <p class="text-sm text-gray-600">Orientation</p>
+                    <p id="orientation" class="font-semibold text-lg">Loading...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Support -->
+        <section class="info-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <i class="fas fa-check-circle text-green-600 mr-3 text-3xl"></i>
+                Feature Support
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="featuresList">
+                <!-- Features will be added by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Connection Info -->
+        <section class="info-card bg-white rounded-lg shadow-md p-6 mb-6">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <i class="fas fa-wifi text-blue-600 mr-3 text-3xl"></i>
+                Network Connection
+            </h2>
+            <div class="space-y-3">
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                    <span class="font-semibold">Status:</span>
+                    <span id="connectionStatus" class="text-blue-600">Loading...</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                    <span class="font-semibold">Type:</span>
+                    <span id="connectionType" class="text-blue-600">Loading...</span>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                    <span class="font-semibold">Download Speed:</span>
+                    <span id="downlink" class="text-blue-600">Loading...</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Export Options -->
+        <section class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold mb-4">Export Device Info</h2>
+            <div class="flex flex-col md:flex-row gap-3">
+                <button onclick="copyDeviceInfo()" class="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700">
+                    <i class="fas fa-copy mr-2"></i>Copy to Clipboard
+                </button>
+                <button onclick="downloadDeviceInfo()" class="flex-1 bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700">
+                    <i class="fas fa-download mr-2"></i>Download as JSON
+                </button>
+                <button onclick="shareDeviceInfo()" class="flex-1 bg-purple-600 text-white py-3 px-6 rounded-lg hover:bg-purple-700">
+                    <i class="fas fa-share-alt mr-2"></i>Share
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="device-detection.js"></script>
+    <script>
+        function updateDeviceInfo() {
+            if (!window.deviceDetector) {
+                setTimeout(updateDeviceInfo, 100);
+                return;
+            }
+
+            const info = deviceDetector.getDeviceInfo();
+            const device = info.device;
+            const os = info.os;
+            const browser = info.browser;
+            const screen = info.screen;
+            const features = info.features;
+            const connection = info.connection;
+
+            // Show Android alert if Android
+            if (device.isAndroid) {
+                document.getElementById('androidAlert').classList.remove('hidden');
+            }
+
+            // Device Type
+            document.getElementById('deviceType').textContent = device.type.toUpperCase();
+            document.getElementById('deviceCategory').textContent = device.isMobile ? 'Mobile' : device.isTablet ? 'Tablet' : 'Desktop';
+            document.getElementById('touchSupport').textContent = features.touchScreen ? 'Touch' : 'No Touch';
+            document.getElementById('standaloneMode').textContent = features.standalone ? 'Installed' : 'Browser';
+
+            // Set device icon
+            const icon = device.isAndroid ? '🤖' : device.isIOS ? '🍎' : '💻';
+            document.getElementById('deviceTypeIcon').textContent = icon;
+
+            // OS Info
+            document.getElementById('osName').textContent = os.name;
+            document.getElementById('osVersion').textContent = os.version;
+            document.getElementById('platform').textContent = info.userAgent.includes('Linux') ? 'Linux' : navigator.platform;
+
+            // Browser Info
+            document.getElementById('browserName').textContent = browser.name;
+            document.getElementById('browserVersion').textContent = browser.version;
+            document.getElementById('browserLang').textContent = navigator.language;
+
+            // Screen Info
+            document.getElementById('screenResolution').textContent = `${screen.width} x ${screen.height}`;
+            document.getElementById('viewport').textContent = `${screen.viewportWidth} x ${screen.viewportHeight}`;
+            document.getElementById('pixelRatio').textContent = `${screen.pixelRatio}x`;
+            document.getElementById('orientation').textContent = screen.orientation;
+
+            // Features
+            const featuresList = document.getElementById('featuresList');
+            featuresList.innerHTML = '';
+            
+            const featureNames = {
+                serviceWorker: 'Service Worker',
+                pushNotifications: 'Push Notifications',
+                geolocation: 'Geolocation',
+                camera: 'Camera',
+                vibration: 'Vibration',
+                share: 'Web Share',
+                localStorage: 'Local Storage',
+                cookies: 'Cookies'
+            };
+
+            Object.entries(features).forEach(([key, value]) => {
+                if (featureNames[key]) {
+                    const div = document.createElement('div');
+                    div.className = `p-3 rounded ${value ? 'bg-green-50' : 'bg-red-50'}`;
+                    div.innerHTML = `
+                        <i class="fas fa-${value ? 'check' : 'times'} ${value ? 'text-green-600' : 'text-red-600'} mr-2"></i>
+                        <span class="text-sm">${featureNames[key]}</span>
+                    `;
+                    featuresList.appendChild(div);
+                }
+            });
+
+            // Connection Info
+            document.getElementById('connectionStatus').textContent = features.online ? '🟢 Online' : '🔴 Offline';
+            if (connection) {
+                document.getElementById('connectionType').textContent = connection.effectiveType || 'Unknown';
+                document.getElementById('downlink').textContent = connection.downlink ? `${connection.downlink} Mbps` : 'Unknown';
+            } else {
+                document.getElementById('connectionType').textContent = 'Not available';
+                document.getElementById('downlink').textContent = 'Not available';
+            }
+        }
+
+        function copyDeviceInfo() {
+            const info = deviceDetector.exportDeviceInfo();
+            navigator.clipboard.writeText(info).then(() => {
+                alert('✅ Device info copied to clipboard!');
+            });
+        }
+
+        function downloadDeviceInfo() {
+            const info = deviceDetector.exportDeviceInfo();
+            const blob = new Blob([info], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'device-info.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        async function shareDeviceInfo() {
+            const info = deviceDetector.exportDeviceInfo();
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: 'Device Information',
+                        text: info
+                    });
+                } catch (err) {
+                    console.log('Share cancelled');
+                }
+            } else {
+                copyDeviceInfo();
+            }
+        }
+
+        // Update info when loaded
+        window.addEventListener('load', updateDeviceInfo);
+
+        // Update orientation on change
+        window.addEventListener('orientationchange', () => {
+            setTimeout(updateDeviceInfo, 100);
+        });
+    </script>
+</body>
+</html>
