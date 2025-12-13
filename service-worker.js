@@ -1,8 +1,15 @@
-const CACHE_NAME = 'innovia-v1';
+const CACHE_NAME = 'innovia-v2';
 const urlsToCache = [
   '/',
   '/index.html',
+  '/settings.html',
+  '/contact-form.html',
+  '/portfolio.html',
+  '/faq.html',
+  '/testimonials.html',
+  '/device-info.html',
   '/cms.js',
+  '/device-detection.js',
   '/manifest.json',
   'https://cdn.tailwindcss.com',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'
